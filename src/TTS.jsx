@@ -31,6 +31,8 @@ export default function TTS() {
 	const auth = useAuth();
 	const [text, setText] = useState("");
 	const [audioUrl, setAudioUrl] = useState("");
+	const [language, setLanguage] = useState("");
+	const [sentiment, setSentiment] = useState("");
 	const [loading, setLoading] = useState(false);
 	const { enqueueSnackbar } = useSnackbar();
 	const pageRef = useRef(null);
@@ -143,6 +145,8 @@ export default function TTS() {
 				enqueueSnackbar("Audio generated successfully", { variant: "success" });
 				const timestamp = new Date().getTime();
 				setAudioUrl(`${response.fileUrl}?t=${timestamp}`);
+				setLanguage(response.language);
+				setSentiment(response.sentiment);
 
 				setRecentHistory((prev) => [
 					{
@@ -382,6 +386,30 @@ export default function TTS() {
 									)}
 								</Box>
 							</Fade>
+
+							{/* Language and Sentiment Info */}
+							{(language || sentiment) && (
+								<Box
+									mt={3}
+									p={2}
+									sx={{
+										background: "rgba(255, 255, 255, 0.05)",
+										borderRadius: 2,
+										border: "1px solid rgba(255, 255, 255, 0.1)",
+									}}
+								>
+									{language && (
+										<Typography variant="subtitle2" color="white">
+											Detected Language: {language}
+										</Typography>
+									)}
+									{sentiment && (
+										<Typography variant="subtitle2" color="white" mt={1}>
+											Sentiment: {sentiment}
+										</Typography>
+									)}
+								</Box>
+							)}
 
 							{/* Recent Conversions */}
 							<Box mt={4} className="content-animation">

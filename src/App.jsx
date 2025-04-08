@@ -196,7 +196,7 @@ function App() {
 							},
 						}}
 					>
-						Sign in
+						Sign in/Sign up
 					</Button>
 				</Box>
 			</Paper>
